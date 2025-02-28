@@ -4,7 +4,12 @@ from edifice import (App, HBoxView, VScrollView, Label, TextInputMultiline,
 from components.explorer import Explorer
 from components.query_box import QueryInput
 from styles.app import *
+from db.connector import Connector
+from db.configs import Config
 
+CONFIG = Config()
+connector = Connector(CONFIG)
+connector.build_structure()
 
 @component
 def MyApp(self):

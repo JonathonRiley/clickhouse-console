@@ -5,6 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "clickhouse-connect>=0.8.15",
+    "pandas>=2.2.3",
     "pyedifice>=3.0.0",
     "pyside6-essentials>=6.8.2.1",
 ]
