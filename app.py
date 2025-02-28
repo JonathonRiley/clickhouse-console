@@ -1,13 +1,20 @@
-from edifice import (App, HBoxView, VScrollView, Label, 
+from edifice import (App, HBoxView, VScrollView, Label, TextInputMultiline,
                      Window, component, Button, use_state)
 
 from components.explorer import Explorer
-from components.styles import *
+from components.query_box import QueryInput
+from styles.app import *
+
 
 @component
 def MyApp(self):
     with Window(title="Clickhouse Console", style=app_window):
-        Explorer()
+        with HBoxView():
+            Explorer()
+            with VScrollView(style=content_wrapper):
+                QueryInput()
+                
+
 
 if __name__ == "__main__":
     App(MyApp()).start()

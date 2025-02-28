@@ -1,22 +1,11 @@
 from edifice import component, use_state,HBoxView, VBoxView, VScrollView, Label, Button
 
-from .styles import *
+from styles.explorer import explorer_wrapper, left, inner_height, explorer_window, explorer_item
 
 @component
 def Explorer(self):
-    show_explorer, set_show_explorer = use_state(True)
-    
-    with HBoxView(style={**debug, **explorer_wrapper}):
-        with VBoxView(style={'align':'left',}):
-            if show_explorer:
-                Button("<", 
-                        style=expander_button,
-                        on_click=lambda _: set_show_explorer(False))
-                with VScrollView(style=explorer_window):
-                    Label("Nav Item 1")
-                    Label("Nav Item 2")
-                    Label("Nav Item 3")
-            else:
-                Button(">",
-                        style=expander_button,
-                        on_click=lambda _: set_show_explorer(True))
+    with HBoxView(style=explorer_wrapper):
+        with VBoxView(style={**left, **inner_height}):
+            with VScrollView(style=explorer_window):
+                for i in range(40):
+                    Label(f"Nav Item {i+1}", style=explorer_item)
