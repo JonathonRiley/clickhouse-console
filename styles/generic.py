@@ -1,4 +1,4 @@
-SIZE = (600, 700)
+SIZE = (600, 800)
 inner_height = {'height': f"{SIZE[0]-20}px"}
 inner_width = {'width': f"{SIZE[1]-20}px"}
 top = {'align':'top'}

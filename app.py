@@ -7,15 +7,15 @@ from styles.app import *
 from db.connector import Connector
 from db.configs import Config
 
-CONFIG = Config()
-connector = Connector(CONFIG)
-connector.build_structure()
 
 @component
 def MyApp(self):
+    config, set_config = use_state(Config())
+    conn, set_conn = use_state(Connector(config))
+    conn.build_structure()
     with Window(title="Clickhouse Console", style=app_window):
         with HBoxView():
-            Explorer()
+            Explorer(conn)
             with VScrollView(style=content_wrapper):
                 QueryInput()
                 
