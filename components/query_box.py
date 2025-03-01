@@ -1,12 +1,23 @@
 import re
-from edifice import (VBoxView, TextInputMultiline, Button, component, use_state)
+from edifice import (HBoxView, VBoxView, TextInputMultiline, Button, component, use_state)
+from typing import Callable
 
+from db.connector import Connector
 from styles.query_box import *
 
+def query_db(conn:Connector, query:str, set_data:Callable):
+    clean_query = re.sub(r'\s+', ' ', query)
+    try:
+        data = conn.query(clean_query)
+    except Exception as e:
+        data = str(e)
+    set_data(data)
+
+
 @component 
-def QueryInput(self):
+def QueryInput(self, conn:Connector, set_data:Callable):
     query, set_query = use_state("")
-    with VBoxView(style={'width':'565px', 
-                 'height':'250px',**debug}):
+    with HBoxView(style=query_input):
         TextInputMultiline(text=query, on_change=set_query, style=query_wrapper )
-        Button("Run", on_click=lambda _ : print(re.sub(r'\s+', ' ', query)), style=button_style)
+        with VBoxView(style={'align':'bottom'}):
+            Button("Run", on_click=lambda _ : query_db(conn, query, set_data), style=button_style)

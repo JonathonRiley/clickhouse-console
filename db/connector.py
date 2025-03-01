@@ -25,7 +25,7 @@ class Connector:
 
     def query(self, query: str):
         results = self.client.query(query)
-        return  pd.DataFrame(results.result_rows, columns=results.column_names)
+        return pd.DataFrame(results.result_rows, columns=results.column_names)
 
     def set_db(self, database: str):
         _ = self.query(f'USE {database};')

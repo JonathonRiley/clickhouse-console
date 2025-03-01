@@ -7,6 +7,10 @@ query_wrapper = {'padding':'5px',
                  'color':'black',
                  'background-color':'white'}
 
+query_input = {'width':'565px',
+               'align':'right',
+               'height':'250px'}
+
 button_style = {'background-color':'lightgrey',
                 'color':'black',
                 'border':'1px solid black',

@@ -1,9 +1,13 @@
-from edifice import (App, HBoxView, VScrollView, Label, TextInputMultiline,
-                     Window, component, Button, use_state)
+
+
+from edifice import (App, HBoxView, VScrollView, RadioButton,
+                     Window, component, use_state)
 
 from components.explorer import Explorer
 from components.query_box import QueryInput
+from components.results import BlankResults, ErrorResults, ResultsTable
 from styles.app import *
+from styles.query_box import *
 from db.connector import Connector
 from db.configs import Config
 
@@ -12,12 +16,27 @@ from db.configs import Config
 def MyApp(self):
     config, set_config = use_state(Config())
     conn, set_conn = use_state(Connector(config))
-    conn.build_structure()
+    data, set_data = use_state(None)
+    display_table, set_display_table = use_state(True)
     with Window(title="Clickhouse Console", style=app_window):
         with HBoxView():
             Explorer(conn)
             with VScrollView(style=content_wrapper):
-                QueryInput()
+                QueryInput(conn, set_data)
+                
+
+                # Selector display type
+                with HBoxView(style={'align':'center', 'height':'40px'}):
+                    RadioButton(text="Table", checked=display_table, on_click=lambda _: set_display_table(True), style={'padding-right':'100px'})
+                    RadioButton(text="Chart", checked=not display_table, on_click=lambda _: set_display_table(False))
+
+                # Results
+                if data is None:
+                    BlankResults('No data')
+                if type(data) == str:
+                    ErrorResults(data)
+                if type(data) == list:
+                    ResultsTable(data)
                 
 
 
