@@ -6,11 +6,10 @@ from styles.explorer import *
 
 @component
 def Explorer(self, conn:Connector):
-    with HBoxView(style=explorer_wrapper):
-        with VBoxView(style={**left, **inner_height}):
-            with VScrollView(style={**top, **explorer_window}):
-                for db in conn.structure.databases:
-                    DatabaseButton(conn, db)
+    with HBoxView(style={**explorer_wrapper, **left, **inner_height}):
+        with VScrollView(style={**top, **explorer_window, 'background-color':'white'}):
+            for db in conn.structure.databases:
+                DatabaseButton(conn, db)
 
 @component
 def DatabaseButton(self, conn:Connector, db:Database):
