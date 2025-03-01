@@ -17,6 +17,8 @@ class Connector:
         )
         self.db = None
         self.structure = Structure()
+        databases = self.databases()
+        self.structure.databases = [Database(name=db) for db in databases['name'].to_list()]
 
     def close(self):
         self.client.disconnect()
@@ -44,8 +46,6 @@ class Connector:
         return self.query(f'DESCRIBE TABLE {database}.{table};')
     
     def build_structure(self):
-        databases = self.databases()
-        self.structure.databases = [Database(name=db) for db in databases['name'].to_list()]
         for db in self.structure.databases:
             tables = self.tables(db.name)
             db.tables = [Table(name=table, columns=[]) for table in tables['name'].to_list()]
