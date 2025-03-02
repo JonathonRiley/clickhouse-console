@@ -11,7 +11,7 @@ def query_db(conn:Connector, query:str, set_data:Callable):
         data = conn.query(clean_query)
     except Exception as e:
         data = str(e)
-    set_data(data)
+    set_data(data.to_dict(orient='records'))
 
 
 @component 

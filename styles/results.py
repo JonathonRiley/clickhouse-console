@@ -34,3 +34,19 @@ error_box = {
     'align':'top',
     'font-size':'10px',
     }
+
+grid_item = {
+    'color':'black',
+    'padding':'5px',
+    'font-size':'10px',
+}
+header_style = {
+    **grid_item,
+    'background-color':'lightgrey',
+    'border':'1px solid black',
+}
+row_style = {
+    **grid_item,
+    'background-color':'white',
+    'border':'1px solid grey',
+}

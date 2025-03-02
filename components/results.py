@@ -1,4 +1,6 @@
-from edifice import (VScrollView, HBoxView, TableGridView, TableGridRow, Label, component)
+from typing import List
+
+from edifice import (VScrollView, HBoxView, VBoxView, TableGridView, TableGridRow, Label, component)
 
 from styles.results import *
 
@@ -13,7 +15,18 @@ def ErrorResults(self, error:str):
     Label(text=error, word_wrap=True,style = {**results_wrapper, **error_box})
 
 @component
-def ResultsTable(self, data):
+def ResultsTable(self, data:List[dict]):
+    cols = list(data[0].keys())
+    widths = {col: max(10, len(str(col))) for col in cols}
+    for row in data:
+        for col in cols:
+            widths[col] = max(widths[col], len(str(row[col])))
+    # with VScrollView(style=results_wrapper):
     with TableGridView(style=results_wrapper):
-        for i, row in data.iterrows():
-            TableGridRow(row=row.to_list())
+        with TableGridRow():
+            for col in cols:
+                Label(text=col, style=header_style)
+        for row in data:
+            with TableGridRow():
+                for col, val in row.items():
+                    Label(text=str(val) + ' '*(widths[col]-len(str(val))), style=row_style)
