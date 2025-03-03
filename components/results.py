@@ -21,12 +21,12 @@ def ResultsTable(self, data:List[dict]):
     for row in data:
         for col in cols:
             widths[col] = max(widths[col], len(str(row[col])))
-    # with VScrollView(style=results_wrapper):
-    with TableGridView(style=results_wrapper):
-        with TableGridRow():
-            for col in cols:
-                Label(text=col, style=header_style)
-        for row in data:
+    with VScrollView(style=results_wrapper):
+        with TableGridView(style={**results_wrapper, 'width': f'{sum(widths.values())*6}px', 'align':'left'}):
             with TableGridRow():
-                for col, val in row.items():
-                    Label(text=str(val) + ' '*(widths[col]-len(str(val))), style=row_style)
+                for col in cols:
+                    Label(text=col, style=header_style)
+            for idx, row in enumerate(data):
+                with TableGridRow():
+                    for col, val in row.items():
+                        Label(text=str(val), style={**row_style, 'width': f'{widths[col]*5}px'}).set_key(f'{col}_{idx}')
