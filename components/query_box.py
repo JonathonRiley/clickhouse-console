@@ -9,9 +9,10 @@ def query_db(conn:Connector, query:str, set_data:Callable):
     clean_query = re.sub(r'\s+', ' ', query)
     try:
         data = conn.query(clean_query)
+        set_data(data.to_dict(orient='records'))
     except Exception as e:
         data = str(e)
-    set_data(data.to_dict(orient='records'))
+        set_data(data)
 
 
 @component 
